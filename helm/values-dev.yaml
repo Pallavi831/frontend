@@ -3,7 +3,7 @@ deployment:
   imageURL: 557690626059.dkr.ecr.us-east-1.amazonaws.com/expense/dev/frontend
   replicas: 2
 hpa:
-  cpuutilization: 15
+  cpuUtilization: 15
 tgb:
   arn: arn:aws:elasticloadbalancing:us-east-1:557690626059:targetgroup/expense-dev/d5f00f1bc9c342f5
 
