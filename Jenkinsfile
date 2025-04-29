@@ -38,11 +38,11 @@ pipeline {
                     sh """
                     aws ecr get-login-password --region ${region} | docker login --username AWS --password-stdin ${account_id}.dkr.ecr.us-east-1.amazonaws.com
 
-                    docker build -t ${account_id}.dkr.ecr.us-east-1.amazonaws.com/${project}/${environment}/${component}:${env.appVersion} .
+                    docker build -t ${account_id}.dkr.ecr.us-east-1.amazonaws.com/${project}/${environment}/${component}:${appVersion} .
 
                     docker images
 
-                    docker push ${account_id}.dkr.ecr.us-east-1.amazonaws.com/${project}/${environment}/${component}:${env.appVersion} .
+                    docker push ${account_id}.dkr.ecr.us-east-1.amazonaws.com/${project}/${environment}/${component}:${appVersion} .
 
                     """
                 }
@@ -54,7 +54,7 @@ pipeline {
                     sh """
                         aws eks update-kubeconfig --region ${region} --name ${project}-${environment}-1
                         cd helm
-                        sed -i 's/IMAGE_VERSION/${env.appVersion}/g' values-${environment}.yaml
+                        sed -i 's/IMAGE_VERSION/${appVersion}/g' values-${environment}.yaml
                         helm upgrade --install ${component} -n ${project} -f values-${environment}.yaml .
 
                     """
